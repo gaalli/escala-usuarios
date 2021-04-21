@@ -1,0 +1,55 @@
+------- Configurando o SERVER ----------
+
+1) Abra a pasta Server e siga os passos abaixo
+	
+2) Abra o cmd nessa pasta e execute o comando: npm init
+
+3) Preencha os dados solicitados. Se quiser segue o exemplo abaixo
+
+name: ("nome do projeto") 
+version: (1.0.0) 
+description: 
+entry point: (index.js) server.js
+test command: 
+git repository: 
+keywords:
+author: 
+license: (ISC)
+
+Is this ok? (yes) yes
+
+
+4) Executa o comando: npm install express sequelize mysql2 body-parser cors --save
+
+5) no arquivo db.config precisa colocar seu usuário e senha do mysql
+
+6) Não sei se tem que fazer mais coisa pq não lembro, se não funfar a gente vê o que faz
+
+-------- Configurando o SERVER ---------
+
+1) Abra a pasta Client e siga os passos abaixo
+	
+2) Abra o cmd nessa pasta e execute o comando: npm install bootstrap 	
+
+3) Abra o cmd nessa pasta e execute o comando: npm install react-router-dom 
+
+4) Abra o cmd nessa pasta e execute o comando: npm install axios	
+
+5) Não sei se tem que fazer mais coisa pq não lembro, se não funfar a gente vê o que faz
+
+---------- Configurando MYSQL ------------
+
+1) Abra o arquivo "Comandos MySQL" e execute lá no seu mysql. Vai criar as tabelas e inserir os dados nela.
+
+-------- Iniciando o projeto ------------
+
+1) Abra o cmd na pasta Server e rode o comando: node server.js
+
+2) O servidor deverá começar a rodar na porta 3001
+
+3) Abra o cmd na pasta Client e rode o comando: npm start
+
+4) O front deverá começar a rodar na porta 3000
+
+5) Se tudo deu certo deverá abrir a página com os dados vindo do banco de dados.
+
