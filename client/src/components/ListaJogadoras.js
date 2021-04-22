@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../App.css';
 import JogadorasDataService from "../services/jogadoras.service";
+import EquipesDataService from "../services/equipes.service";
 
 export default class ListaJogadoras extends Component {
 	constructor(props) {
@@ -11,17 +12,14 @@ export default class ListaJogadoras extends Component {
 
 		this.state = {
 			jogadoras: [],
-			posicaoGOL: false,
-			posicaoZAG: false,
-			posicaoLAT: false,
-			posicaoMEI: false,
-			posicaoATA: false,
-			posicaoFiltro: [],
+			equipes: [],
+			filtro: [],
 		};
 	}
 
 	componentDidMount() {
 		this.retrieveJogadoras();
+		this.retrieveEquipes();
 	}
 
 
@@ -31,7 +29,18 @@ export default class ListaJogadoras extends Component {
 				this.setState({
 					jogadoras: response.data
 				});
-				console.log(response.data);
+			})
+			.catch(e => {
+				console.log(e);
+			});
+	}
+
+	retrieveEquipes() {
+		EquipesDataService.getAll()
+			.then(response => {
+				this.setState({
+					equipes: response.data
+				});
 			})
 			.catch(e => {
 				console.log(e);
@@ -39,57 +48,40 @@ export default class ListaJogadoras extends Component {
 	}
 
 	setFilter(e) {
-		this.setState({
-			[e.target.id]: e.target.checked,
-		})
+
+		var f = this.state.filtro;
+		var item = e.target.value;
+
+		if (e.target.checked) {
+			f.push(item)
+		} else {
+			const index = f.indexOf(item);
+			if (index > -1) {
+				f.splice(index, 1);
+			}
+		}
+
+		this.setState({ filtro: f });
+
 	}
 
 	getFilter() {
-		var posicaoFiter = [];
-		var i = 0;
 
-		if (this.state.posicaoGOL) {
-			posicaoFiter[i] = "GOL";
-			i++;
-		}
-		if (this.state.posicaoZAG) {
-			posicaoFiter[i] = "ZAG";
-			i++;
-		}
-		if (this.state.posicaoLAT) {
-			posicaoFiter[i] = "LAT";
-			i++;
-		}
-		if (this.state.posicaoMEI) {
-			posicaoFiter[i] = "MEI";
-			i++;
-		}
-		if (this.state.posicaoATA) {
-			posicaoFiter[i] = "ATA";
-			i++;
-		}
-
-		this.setState({ posicaoFiltro: posicaoFiter }, () => {
-			JogadorasDataService.findByFilter(posicaoFiter)
-				.then(response => {
-					this.setState({
-						jogadoras: response.data
-					});
-					console.log(response.data);
-				})
-				.catch(e => {
-					console.log(e);
+		JogadorasDataService.findByFilter(this.state.filtro)
+			.then(response => {
+				this.setState({
+					jogadoras: response.data
 				});
-		});
-
-
-
-
+			})
+			.catch(e => {
+				console.log(e);
+			});
 
 	}
 
 	render() {
 		const { jogadoras } = this.state;
+		const { equipes } = this.state;
 
 		return (
 
@@ -103,16 +95,33 @@ export default class ListaJogadoras extends Component {
 					</button>
 					<div className="shadow collapse my-3 mx-0 p-3" id="collapseFiltros">
 
-						<div>
-							<div className="mt-2">
-								<h5>Posição</h5>
+						<div className="row" key="filtroHeader">
+							<div className="col-sm">
+								<div className="mt-2">
+									<h5>Posição</h5>
+								</div>
+							</div>
+							<div className="col-sm">
+								<div className="mt-2">
+									<h5>Equipes</h5>
+								</div>
 							</div>
 						</div>
-						<Filtro posicao="Goleira" id="posicaoGOL" setFilter={this.setFilter} />
-						<Filtro posicao="Zagueira" id="posicaoZAG" setFilter={this.setFilter} />
-						<Filtro posicao="Lateral" id="posicaoLAT" setFilter={this.setFilter} />
-						<Filtro posicao="Meia" id="posicaoMEI" setFilter={this.setFilter} />
-						<Filtro posicao="Atacante" id="posicaoATA" setFilter={this.setFilter} />
+						<div className="row" key="filtroBody">
+							<div className="col-sm">
+								<Filtro id="filtroPosicaoGOL" text="Goleira" tipo="posicao" valor="GOLEIRA" setFilter={this.setFilter} />
+								<Filtro id="filtroPosicaoZAG" text="Zagueira" tipo="posicao" valor="ZAGUEIRA" setFilter={this.setFilter} />
+								<Filtro id="filtroPosicaoLAT" text="Lateral" tipo="posicao" valor="LATERAL" setFilter={this.setFilter} />
+								<Filtro id="filtroPosicaoMEI" text="Meia" tipo="posicao" valor="MEIO CAMPO" setFilter={this.setFilter} />
+								<Filtro id="filtroPosicaoATA" text="Atacante" tipo="posicao" valor="ATACANTE" setFilter={this.setFilter} />
+							</div>
+							<div className="col-sm">
+								{equipes &&
+									equipes.map((equipe, index) => (
+										<Filtro id={"filtroEquipe" + equipe.id} text={equipe.nome} tipo="equipe" valor={equipe.id} setFilter={this.setFilter} />
+									))}
+							</div>
+						</div>
 
 						<button className="btn btn-primary m-2" type="button" onClick={this.getFilter}>
 							Aplicar Filtros
@@ -135,7 +144,7 @@ export default class ListaJogadoras extends Component {
 						<tbody>
 							{jogadoras &&
 								jogadoras.map((jogadora, index) => (
-									<JogadoraRow key={jogadora.id} jogadora={jogadora} addJogadora={this.props.addJogadora}/>
+									<JogadoraRow key={jogadora.id} jogadora={jogadora} addJogadora={this.props.addJogadora} />
 								))}
 						</tbody>
 					</table>
@@ -153,9 +162,9 @@ class Filtro extends Component {
 		return (
 
 			<div className="form-check">
-				<input className="form-check-input" type="checkbox" value="" id={this.props.id} onChange={this.props.setFilter} />
+				<input className="form-check-input" type="checkbox" value={this.props.tipo + "=" + this.props.valor} key={this.props.id} onChange={this.props.setFilter} />
 				<label className="form-check-label">
-					{this.props.posicao}
+					{this.props.text}
 				</label>
 			</div>
 
@@ -168,10 +177,10 @@ class JogadoraRow extends Component {
 
 	render() {
 		return (
-			<tr key={this.props.jogadora.id}>
+			<tr key={"jogadora" + this.props.jogadora.key}>
 				<td>{this.props.jogadora.posicao}</td>
 				<td>
-					<img src={require("../imagens/escudos/" + this.props.jogadora.equipe.escudo)} alt="" title={this.props.jogadora.equipe.nome} />
+					<img src={require("../imagens/escudos/" + this.props.jogadora.equipe.escudo).default} alt="" title={this.props.jogadora.equipe.nome} width="65" height="65" />
 				</td>
 				<td>{this.props.jogadora.nome}</td>
 				<td>

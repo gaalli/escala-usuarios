@@ -1,7 +1,6 @@
 {
-  "name": "server",
+  "name": "escala-server",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -15,7 +14,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mysql2": "^2.2.5",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.6.2"
   },
-  "devDependencies": {}
+  "description": ""
 }

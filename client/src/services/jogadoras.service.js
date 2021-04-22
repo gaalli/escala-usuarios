@@ -2,17 +2,16 @@ import http from "../http-common";
 
 class JogadorasDataService {
 
-  getAll() {
-    return http.get("/jogadoras");
+	getAll() {
+		return http.get("/jogadoras");
 	}
 
-	findByFilter(posicao) {
-		var filtros = "";
-		posicao.map((pos) => filtros= filtros + "posicao="+pos+"&");
+	findByFilter(filtro) {
+ 		var filtros = "";
+		filtro.map((f) => filtros = filtros + f + "&");
 
-		console.log(filtros);
-    return http.get(`/jogadoras?${filtros}`);
-  }
+		return http.get(`/jogadoras?${filtros}`);
+	}
 }
 
 export default new JogadorasDataService();

@@ -25,17 +25,15 @@ Is this ok? (yes) yes
 
 6) Não sei se tem que fazer mais coisa pq não lembro, se não funfar a gente vê o que faz
 
--------- Configurando o SERVER ---------
+-------- Configurando o CLIENT ---------
 
 1) Abra a pasta Client e siga os passos abaixo
 	
-2) Abra o cmd nessa pasta e execute o comando: npm install bootstrap 	
+2) Abra o cmd nessa pasta e execute o comando: npm install react-router-dom 
 
-3) Abra o cmd nessa pasta e execute o comando: npm install react-router-dom 
+3) Abra o cmd nessa pasta e execute o comando: npm install axios	
 
-4) Abra o cmd nessa pasta e execute o comando: npm install axios	
-
-5) Não sei se tem que fazer mais coisa pq não lembro, se não funfar a gente vê o que faz
+4) Não sei se tem que fazer mais coisa pq não lembro, se não funfar a gente vê o que faz
 
 ---------- Configurando MYSQL ------------
 
