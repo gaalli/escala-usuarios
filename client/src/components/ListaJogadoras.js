@@ -18,8 +18,17 @@ export default class ListaJogadoras extends Component {
 	}
 
 	componentDidMount() {
-		this.retrieveJogadoras();
+		//this.retrieveJogadoras();
 		this.retrieveEquipes();
+
+		while(this.props.jogadoras===null){
+			console.log("esperando");
+		}
+		this.setState({
+			jogadoras: this.props.jogadoras
+		},() => {
+			console.log(this.state.jogadoras);
+		});
 	}
 
 
@@ -28,6 +37,17 @@ export default class ListaJogadoras extends Component {
 			.then(response => {
 				this.setState({
 					jogadoras: response.data
+				});
+			})
+			.then(() => {
+				var j = this.state.jogadoras;
+				for (var i = 0; i < j.length; i++) {
+					j[i].ativo = true;
+					j[i].add = true;
+				}
+
+				this.setState({
+					jogadoras: j
 				});
 			})
 			.catch(e => {
@@ -123,7 +143,7 @@ export default class ListaJogadoras extends Component {
 							</div>
 						</div>
 
-						<button className="btn btn-primary m-2" type="button" onClick={this.getFilter}>
+						<button className="btn btn-primary m-2" type="button" onClick={() => this.getFilter}>
 							Aplicar Filtros
 						</button>
 					</div>
@@ -144,7 +164,7 @@ export default class ListaJogadoras extends Component {
 						<tbody>
 							{jogadoras &&
 								jogadoras.map((jogadora, index) => (
-									<JogadoraRow key={jogadora.id} jogadora={jogadora} addJogadora={this.props.addJogadora} />
+									<JogadoraRow key={jogadora.id} jogadora={jogadora} action={this.props.action} />
 								))}
 						</tbody>
 					</table>
@@ -176,6 +196,9 @@ class Filtro extends Component {
 class JogadoraRow extends Component {
 
 	render() {
+
+		var jogadora = this.props.jogadora
+
 		return (
 			<tr key={"jogadora" + this.props.jogadora.key}>
 				<td>{this.props.jogadora.posicao}</td>
@@ -184,10 +207,10 @@ class JogadoraRow extends Component {
 				</td>
 				<td>{this.props.jogadora.nome}</td>
 				<td>
-					<div className="btn btn-success btnAdicionar" onClick={() => this.props.addJogadora(this.props.jogadora)}>+</div>
+					<div className={jogadora.add ? "btn btn-success" : "btn btn-danger"} onClick={() => this.props.action(this.props.jogadora)}>+</div>
 				</td>
 			</tr>
-		)
+		);
 
 	}
 }

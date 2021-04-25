@@ -38,7 +38,7 @@ CREATE TABLE `escaladb`.`jogadoras` (
   INDEX `equipeId_idx` (`equipeId` ASC) VISIBLE,
   CONSTRAINT `equipeId`
     FOREIGN KEY (`equipeId`)
-    REFERENCES `comando`.`equipes` (`id`)
+    REFERENCES `escaladb`.`equipes` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
   
@@ -484,14 +484,20 @@ INSERT INTO jogadoras (nome, posicao, equipeId, createdAt, updatedAt) VALUES ('I
 CREATE TABLE `escaladb`.`times` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL,
-  `tecnico` VARCHAR(45) NULL,
+  `usuarioId` INT NOT NULL,
   `pontuacao` VARCHAR(45) NULL,
   `createdAt` DATETIME NOT NULL,
   `updatedAt` DATETIME NOT NULL,
-  PRIMARY KEY (`id`));
+  PRIMARY KEY (`id`),
+   INDEX `usuarioId_idx` (`usuarioId` ASC) VISIBLE,
+  CONSTRAINT `usuarioId`
+    FOREIGN KEY (`usuarioId`)
+    REFERENCES `escaladb`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
   
-  INSERT INTO times (nome, tecnico, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 1', 'Tecnico Teste 1', '10', now(), now());
-  INSERT INTO times (nome, tecnico, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 2', 'Tecnico Teste 2', '20', now(), now());
-  INSERT INTO times (nome, tecnico, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 3', 'Tecnico Teste 3', '15', now(), now());
+  INSERT INTO times (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 1', 1, '10', now(), now());
+  INSERT INTO times (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 2', 2, '20', now(), now());
+  INSERT INTO times (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 3', 3, '15', now(), now());
   
   

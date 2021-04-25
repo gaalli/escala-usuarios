@@ -54,7 +54,7 @@ export default class Classificacao extends Component {
 								<tr key={classificacao.id}>
 									<th>{index+1}</th>
 									<td>{classificacao.nome}</td>
-									<td>{classificacao.tecnico}</td>
+									<td>{classificacao.usuario.nome}</td>
 									<td>{classificacao.pontuacao}</td>
 								</tr>
 							))}

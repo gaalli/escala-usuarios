@@ -3,13 +3,22 @@ module.exports = (sequelize, Sequelize) => {
     nome: {
       type: Sequelize.STRING
     },
-    tecnico: {
-      type: Sequelize.STRING
+		usuarioId: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+			references: {         // User belongsTo Company 1:1
+				model: 'Usuario',
+				key: 'id'
+			}
     },
     pontuacao: {
       type: Sequelize.INTEGER
     }
   });
+
+  Time.associate = function (models) {
+		Time.belongsTo(models.Usuario)
+	}
 
   return Time;
 };

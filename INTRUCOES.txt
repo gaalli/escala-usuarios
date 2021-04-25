@@ -1,10 +1,12 @@
 ------- Configurando o SERVER ----------
 
-1) Abra a pasta Server e siga os passos abaixo
+1) Instale o Node.js na sua máquina
+
+2) Abra a pasta Server e siga os passos abaixo
 	
 2) Abra o cmd nessa pasta e execute o comando: npm init
 
-3) Preencha os dados solicitados. Se quiser segue o exemplo abaixo
+4) Preencha os dados solicitados. Se quiser segue o exemplo abaixo
 
 name: ("nome do projeto") 
 version: (1.0.0) 

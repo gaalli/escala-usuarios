@@ -1,5 +1,6 @@
 const db = require("../models");
 const Time = db.Time;
+const Usuario = db.Usuario;
 const Op = db.Sequelize.Op;
 
 
@@ -10,7 +11,8 @@ exports.getClassificacao = (req, res) => {
 		{
 			order: [
 				['pontuacao', 'DESC']
-			]
+			],
+      include: Usuario
 		}
 	)
     .then(data => {
@@ -24,10 +26,9 @@ exports.getClassificacao = (req, res) => {
     });
 };
 
-// Retrieve Classificacao from the database.
 exports.findAll = (req, res) => {
 
-  Times.findAll()
+  Time.findAll()
     .then(data => {
       res.send(data);
     })

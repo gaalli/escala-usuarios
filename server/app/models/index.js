@@ -23,7 +23,8 @@ db.Time = require("./times.model.js")(sequelize, Sequelize);
 db.Equipe = require("./equipes.model.js")(sequelize, Sequelize);
 db.Jogadora = require("./jogadoras.model.js")(sequelize, Sequelize);
 db.Escalacao = require("./escalacao.model.js")(sequelize, Sequelize);
-
+db.Formacao = require("./formacao.model.js")(sequelize, Sequelize);
+db.Usuario = require("./usuario.model.js")(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
