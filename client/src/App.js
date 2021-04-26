@@ -4,12 +4,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Menu from './components/Menu';
 import Classificacao from './components/Classificacao';
-import Escalacao from './components/Escalacao';
+//import Escalacao from './components/Escalacao';
+import Escalacao from './components/PageEscalacao';
 
 function App() {
 	return (
 		<Router>
-			<div>
+			<div className="mx-auto">
 				<Menu />
 				<Switch>
 					<Route path="/" exact component={Classificacao} />

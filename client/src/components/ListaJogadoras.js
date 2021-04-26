@@ -6,9 +6,6 @@ import EquipesDataService from "../services/equipes.service";
 export default class ListaJogadoras extends Component {
 	constructor(props) {
 		super(props);
-		this.retrieveJogadoras = this.retrieveJogadoras.bind(this);
-		this.setFilter = this.setFilter.bind(this);
-		this.getFilter = this.getFilter.bind(this);
 
 		this.state = {
 			jogadoras: [],
@@ -20,39 +17,6 @@ export default class ListaJogadoras extends Component {
 	componentDidMount() {
 		//this.retrieveJogadoras();
 		this.retrieveEquipes();
-
-		while(this.props.jogadoras===null){
-			console.log("esperando");
-		}
-		this.setState({
-			jogadoras: this.props.jogadoras
-		},() => {
-			console.log(this.state.jogadoras);
-		});
-	}
-
-
-	retrieveJogadoras() {
-		JogadorasDataService.getAll()
-			.then(response => {
-				this.setState({
-					jogadoras: response.data
-				});
-			})
-			.then(() => {
-				var j = this.state.jogadoras;
-				for (var i = 0; i < j.length; i++) {
-					j[i].ativo = true;
-					j[i].add = true;
-				}
-
-				this.setState({
-					jogadoras: j
-				});
-			})
-			.catch(e => {
-				console.log(e);
-			});
 	}
 
 	retrieveEquipes() {
@@ -67,150 +31,62 @@ export default class ListaJogadoras extends Component {
 			});
 	}
 
-	setFilter(e) {
-
-		var f = this.state.filtro;
-		var item = e.target.value;
-
-		if (e.target.checked) {
-			f.push(item)
-		} else {
-			const index = f.indexOf(item);
-			if (index > -1) {
-				f.splice(index, 1);
-			}
-		}
-
-		this.setState({ filtro: f });
-
+	changeQ(q) {
+		this.setState({
+			q: q
+		})
 	}
 
-	getFilter() {
-
-		JogadorasDataService.findByFilter(this.state.filtro)
-			.then(response => {
-				this.setState({
-					jogadoras: response.data
-				});
-			})
-			.catch(e => {
-				console.log(e);
-			});
-
+	testeFiltro(rows) {
+		var result = rows.filter(row => row.posicao.toLowerCase().indexOf(this.state.q) > -1);
+		return result;
 	}
 
 	render() {
-		const { jogadoras } = this.state;
+		const jogadoras = this.props.jogadoras;
 		const { equipes } = this.state;
 
 		return (
-
-			<div>
-				<div className="header m-5">
-					<h1>Lista de Jogadoras</h1>
-				</div>
-				<div className="my-5">
-					<button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseFiltros" aria-expanded="false" aria-controls="collapseExample">
-						Filtros
-					</button>
-					<div className="shadow collapse my-3 mx-0 p-3" id="collapseFiltros">
-
-						<div className="row" key="filtroHeader">
-							<div className="col-sm">
-								<div className="mt-2">
-									<h5>Posição</h5>
-								</div>
-							</div>
-							<div className="col-sm">
-								<div className="mt-2">
-									<h5>Equipes</h5>
-								</div>
-							</div>
-						</div>
-						<div className="row" key="filtroBody">
-							<div className="col-sm">
-								<Filtro id="filtroPosicaoGOL" text="Goleira" tipo="posicao" valor="GOLEIRA" setFilter={this.setFilter} />
-								<Filtro id="filtroPosicaoZAG" text="Zagueira" tipo="posicao" valor="ZAGUEIRA" setFilter={this.setFilter} />
-								<Filtro id="filtroPosicaoLAT" text="Lateral" tipo="posicao" valor="LATERAL" setFilter={this.setFilter} />
-								<Filtro id="filtroPosicaoMEI" text="Meia" tipo="posicao" valor="MEIO CAMPO" setFilter={this.setFilter} />
-								<Filtro id="filtroPosicaoATA" text="Atacante" tipo="posicao" valor="ATACANTE" setFilter={this.setFilter} />
-							</div>
-							<div className="col-sm">
-								{equipes &&
-									equipes.map((equipe, index) => (
-										<Filtro id={"filtroEquipe" + equipe.id} text={equipe.nome} tipo="equipe" valor={equipe.id} setFilter={this.setFilter} />
-									))}
-							</div>
-						</div>
-
-						<button className="btn btn-primary m-2" type="button" onClick={() => this.getFilter}>
-							Aplicar Filtros
-						</button>
-					</div>
-
-
-				</div>
-
-				<div>
-					<table className="table my-3 mx-auto">
-						<thead>
-							<tr>
-								<th scope="col">Posição</th>
-								<th scope="col">Time</th>
-								<th scope="col">Jogadora</th>
-								<th scope="col"></th>
-							</tr>
-						</thead>
 						<tbody>
 							{jogadoras &&
 								jogadoras.map((jogadora, index) => (
 									<JogadoraRow key={jogadora.id} jogadora={jogadora} action={this.props.action} />
 								))}
 						</tbody>
-					</table>
-				</div>
-			</div>
 
 		);
 	}
 }
 
-class Filtro extends Component {
+function Filtro(props) {
 
-	render() {
+	return (
 
-		return (
-
-			<div className="form-check">
-				<input className="form-check-input" type="checkbox" value={this.props.tipo + "=" + this.props.valor} key={this.props.id} onChange={this.props.setFilter} />
-				<label className="form-check-label">
-					{this.props.text}
-				</label>
-			</div>
+		<div className="form-check">
+			<input className="form-check-input" type="checkbox" value={props.tipo + "=" + props.valor} onChange={props.setFilter} />
+			<label className="form-check-label">
+				{props.text}
+			</label>
+		</div>
 
 
-		);
-	}
+	);
 }
 
-class JogadoraRow extends Component {
+function JogadoraRow(props) {
 
-	render() {
+	var jogadora = props.jogadora
 
-		var jogadora = this.props.jogadora
-
-		return (
-			<tr key={"jogadora" + this.props.jogadora.key}>
-				<td>{this.props.jogadora.posicao}</td>
-				<td>
-					<img src={require("../imagens/escudos/" + this.props.jogadora.equipe.escudo).default} alt="" title={this.props.jogadora.equipe.nome} width="65" height="65" />
-				</td>
-				<td>{this.props.jogadora.nome}</td>
-				<td>
-					<div className={jogadora.add ? "btn btn-success" : "btn btn-danger"} onClick={() => this.props.action(this.props.jogadora)}>+</div>
-				</td>
-			</tr>
-		);
-
-	}
+	return (
+		<tr key={"jogadora" + props.jogadora.key}>
+			<td>{props.jogadora.posicao}</td>
+			<td>
+				<img src={require("../imagens/escudos/" + props.jogadora.equipe.escudo).default} alt="" title={props.jogadora.equipe.nome} width="65" height="65" />
+			</td>
+			<td>{props.jogadora.nome}</td>
+			<td>
+				<div className={jogadora.add ? "btn btn-success" : "btn btn-danger"} onClick={() => props.action(props.jogadora)}>+</div>
+			</td>
+		</tr>
+	);
 }

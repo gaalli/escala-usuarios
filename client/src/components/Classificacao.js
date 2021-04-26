@@ -34,7 +34,7 @@ export default class Classificacao extends Component {
 
 		return (
 
-			<div className="m-5">
+			<div className="m-3">
 				<div className="header m-5">
 					<h1>Classificação</h1>
 				</div>

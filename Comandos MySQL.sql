@@ -481,6 +481,34 @@ INSERT INTO jogadoras (nome, posicao, equipeId, createdAt, updatedAt) VALUES ('G
 INSERT INTO jogadoras (nome, posicao, equipeId, createdAt, updatedAt) VALUES ('CAROLINE', 'ATACANTE',16, now(), now());
 INSERT INTO jogadoras (nome, posicao, equipeId, createdAt, updatedAt) VALUES ('ISA', 'ATACANTE',16, now(), now());
   
+CREATE TABLE `escaladb`.`usuario` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `telefone` VARCHAR(45) NULL,
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NOT NULL,
+  PRIMARY KEY (`id`));
+  
+INSERT INTO usuarios (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 1', 'usuario1@teste.com', '(11) 11111-1111', now(), now());
+INSERT INTO usuarios (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 2', 'usuario2@teste.com', '(22) 22222-2222', now(), now());
+INSERT INTO usuarios (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 3', 'usuario3@teste.com', '(33) 33333-3333', now(), now());
+  
+  CREATE TABLE `escaladb`.`formacao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL,
+  `num_goleira` INT NULL,
+  `num_lateral` INT NULL,
+  `num_zagueira` INT NULL,
+  `num_meia` INT NULL,
+  `num_atacante` INT NULL,
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NOT NULL,
+  PRIMARY KEY (`id`));
+  
+INSERT INTO formacao (nome, num_goleira, num_lateral, num_zagueira, num_meia, num_atacante, createdAt, updatedAt) VALUES ('4-3-3', 1, 2, 2, 3, 3, now(), now());
+INSERT INTO formacao (nome, num_goleira, num_lateral, num_zagueira, num_meia, num_atacante, createdAt, updatedAt) VALUES ('4-4-2', 1, 2, 2, 4, 2, now(), now());  
+INSERT INTO formacao (nome, num_goleira, num_lateral, num_zagueira, num_meia, num_atacante, createdAt, updatedAt) VALUES ('3-4-3', 1, 0, 3, 4, 3, now(), now());
 CREATE TABLE `escaladb`.`times` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL,

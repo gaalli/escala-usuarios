@@ -1,3 +1,4 @@
 client/node_modules/
 server/node_modules/
 server/app/config/db.config.js
+client/src/components/Escalacao bkp.js
