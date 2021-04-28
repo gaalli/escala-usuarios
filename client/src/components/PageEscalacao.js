@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import '../App.css';
+
 import FormacaoDataService from "../services/formacao.service";
 import JogadorasDataService from "../services/jogadoras.service";
 import EquipesDataService from "../services/equipes.service";
+import UsuarioDataService from "../services/usuario.service";
+
 import ListaJogadoras from "./ListaJogadoras";
 import Escalacao from "./Escalacao";
 
@@ -15,11 +18,12 @@ export default class PageEscalacao extends Component {
 			escalacao: [],
 			jogadoras: [],
 			equipes: [],
-			filtro: ["","",""],
+			filtro: ["", "", ""],
 			posicoesFormacao: [],
 			posicoesEscalacao: [],
 			jogadorasPorTime: [],
 			maxJogadoras: 4,
+			usuario: {},
 		};
 		this.setEsquema = this.setEsquema.bind(this);
 		this.setFormacao = this.setFormacao.bind(this);
@@ -27,6 +31,8 @@ export default class PageEscalacao extends Component {
 		this.handleAction = this.handleAction.bind(this);
 		this.setFiltro = this.setFiltro.bind(this);
 		this.pesquisaFiltro = this.pesquisaFiltro.bind(this);
+		this.dadosUsuario = this.dadosUsuario.bind(this);
+		this.cadastraUsuario = this.cadastraUsuario.bind(this);
 	}
 
 	componentDidMount() {
@@ -85,7 +91,7 @@ export default class PageEscalacao extends Component {
 
 		this.setState({
 			posicoesFormacao: formacao,
-			posicoesEscalacao: formacao,
+			//posicoesEscalacao: formacao,
 
 		}, () => {
 			this.setFormacao();
@@ -97,9 +103,16 @@ export default class PageEscalacao extends Component {
 
 		var formacao = this.state.formacao.find(x => x.nome === e.target.value);
 
+		var escalacao = this.state.escalacao;
+		for (var i = 0; i < escalacao.length; i++) {
+			this.removeJogadora(escalacao[i]);
+		}
 		this.setState({
 			posicoesFormacao: formacao,
-			posicoesEscalacao: formacao,
+			//posicoesEscalacao: formacao,
+			escalacao: [],
+			posicoerPorTime: [],
+
 
 		}, () => {
 			this.setFormacao();
@@ -254,11 +267,40 @@ export default class PageEscalacao extends Component {
 
 	pesquisaFiltro(rows) {
 		var filtro = this.state.filtro;
-		var result = rows.filter(row => 
+		var result = rows.filter(row =>
 			row.posicao.toLowerCase().indexOf(filtro[0]) > -1 &&
 			row.equipe.nome.toLowerCase().indexOf(filtro[1]) > -1 &&
 			row.nome.toLowerCase().indexOf(filtro[2]) > -1);
 		return result;
+	}
+
+	dadosUsuario(e) {
+
+		const { name, value } = e.target;
+		const usuario = this.state.usuario;
+		usuario[name] = value;
+
+		this.setState({
+			usuario: usuario
+		});
+	}
+
+	cadastraUsuario() {
+
+		var data = {
+			nome: this.state.usuario.nome,
+			email: this.state.usuario.email,
+			telefone: this.state.usuario.telefone,
+		}
+
+		UsuarioDataService.create(data)
+			.then(response => {
+				this.setState({ usuario: response.data})
+			})
+			.catch(e => {
+				console.log(e);
+			});
+
 	}
 
 	render() {
@@ -270,6 +312,7 @@ export default class PageEscalacao extends Component {
 
 		return (
 			<div className="m-3">
+				<DadosUsuario dadosUsuario={this.dadosUsuario} cadastraUsuario={this.cadastraUsuario} />
 				<Escalacao escalacao={escalacao} formacao={formacao} action={this.handleAction} setEsquema={this.setEsquema} />
 				<div>
 					<div className="header m-5">
@@ -281,15 +324,15 @@ export default class PageEscalacao extends Component {
 								<tr>
 									<th scope="col">
 										<div className="row">Posicao</div>
-										<input className="row" type="text" onChange={(e) => this.setFiltro(e.target.value,0)}/>
+										<input className="row" type="text" onChange={(e) => this.setFiltro(e.target.value, 0)} />
 									</th>
 									<th scope="col">
 										<div className="row">Time</div>
-										<input className="row" type="text" onChange={(e) => this.setFiltro(e.target.value,1)}/>
+										<input className="row" type="text" onChange={(e) => this.setFiltro(e.target.value, 1)} />
 									</th>
 									<th scope="col">
 										<div className="row">Jogadora</div>
-										<input className="row" type="text" onChange={(e) => this.setFiltro(e.target.value,2)}/>
+										<input className="row" type="text" onChange={(e) => this.setFiltro(e.target.value, 2)} />
 									</th>
 									<th scope="col"></th>
 								</tr>
@@ -303,5 +346,33 @@ export default class PageEscalacao extends Component {
 
 		);
 	}
+}
+
+function DadosUsuario(props) {
+
+	return (
+		<form className="submit-form row g-3">
+			<div className="col-12 my-2">
+				<label htmlFor="inputNome" className="form-label">Nome</label>
+				<input type="text" className="form-control" id="inputNome" name="nome" onChange={props.dadosUsuario}/>
+			</div>
+			<div className="col-md-6 my-2">
+				<label htmlFor="inputeEmail" className="form-label">Email</label>
+				<input type="email" className="form-control" id="inputeEmail" name="email" onChange={props.dadosUsuario}/>
+			</div>
+			<div className="col-md-6 my-2">
+				<label htmlFor="inputTelefone" className="form-label">Telefone</label>
+				<input type="text" className="form-control" id="inputTelefone" name="telefone" onChange={props.dadosUsuario} />
+			</div>
+			<div className="col-12 my-2">
+				<label htmlFor="inputNomeDoTime" className="form-label">Nome do Time</label>
+				<input type="text" className="form-control" id="inputNomeDoTime" />
+			</div>
+			<div className="col-12 my-2">
+				<button className="btn btn-primary" onClick={props.cadastraUsuario}>Confirmar</button>
+			</div>
+		</form>
+	)
+
 }
 

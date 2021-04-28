@@ -33,3 +33,32 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.create = (req, res) => {
+  // Validate request
+  if (!req.body.nome) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+
+  // Create a Tutorial
+  const usuario = {
+    nome: req.body.nome,
+    email: req.body.email,
+    telefone: req.body.telefone
+  };
+
+  // Save Tutorial in the database
+  Usuario.create(usuario)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
