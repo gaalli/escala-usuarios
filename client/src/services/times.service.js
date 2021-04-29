@@ -8,6 +8,14 @@ class TimesDataService {
 	getClassificacao() {
     return http.get("/times/classificacao");
 	}
+
+  create(data) {
+    return http.post("/times", data);
+  }
+
+  getByUsuario(usuarioId){
+    return http.get(`/times?usuarioId=${usuarioId}`);
+  }
 }
 
 export default new TimesDataService();

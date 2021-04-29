@@ -5,6 +5,14 @@ class UsuarioDataService {
     return http.get("/usuario");
 	}
 
+  get (id) {
+    return http.get(`/usuario/${id}`);
+  }
+
+  getByEmail (email) {
+    return http.get(`/usuario?email=${email}`);
+  }
+
 	getClassificacao() {
     return http.get("/usuario/classificacao");
 	}
@@ -12,6 +20,7 @@ class UsuarioDataService {
   create(data) {
     return http.post("/usuario", data);
   }
+
 }
 
 export default new UsuarioDataService();

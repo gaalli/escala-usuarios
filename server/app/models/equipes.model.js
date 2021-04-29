@@ -6,7 +6,9 @@ module.exports = (sequelize, Sequelize) => {
     escudo: {
       type: Sequelize.STRING
     },
-	});
+	},{
+    freezeTableName: true
+  });
 	Equipe.associate = function(models) {
 		Equipe.hasMany(models.Jogadora);
 	}

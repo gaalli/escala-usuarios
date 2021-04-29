@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Menu from './components/Menu';
 import Classificacao from './components/Classificacao';
-import Escalacao from './components/PageEscalacao';
+import Escalacao from './components/PageUsuario';
 
 function App() {
 	return (

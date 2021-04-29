@@ -5,7 +5,10 @@ const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
 
-	Usuario.findAll()
+  const email = req.query.email;
+  var condition = email ? { email:email}  : null;
+
+	Usuario.findAll({ where: condition })
 		.then(data => {
 			res.send(data);
 		})
@@ -42,7 +45,6 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Tutorial
   const usuario = {
     nome: req.body.nome,
     email: req.body.email,

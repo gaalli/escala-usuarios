@@ -5,6 +5,7 @@ function Escalacao(props) {
 
 	const escalacao = props.escalacao;
 	const formacao = props.formacao;
+	const time = props.time;
 
 	return (
 
@@ -22,6 +23,9 @@ function Escalacao(props) {
 								<option key={"formacao" + f.id} value={f.nome}>{f.nome}</option>
 							))}
 					</select>
+				</label>
+				<label className="mx-5 h3">
+					Time: {time.nome}
 				</label>
 			</div>
 

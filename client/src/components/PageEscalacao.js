@@ -4,7 +4,6 @@ import '../App.css';
 import FormacaoDataService from "../services/formacao.service";
 import JogadorasDataService from "../services/jogadoras.service";
 import EquipesDataService from "../services/equipes.service";
-import UsuarioDataService from "../services/usuario.service";
 
 import ListaJogadoras from "./ListaJogadoras";
 import Escalacao from "./Escalacao";
@@ -23,7 +22,7 @@ export default class PageEscalacao extends Component {
 			posicoesEscalacao: [],
 			jogadorasPorTime: [],
 			maxJogadoras: 4,
-			usuario: {},
+			time: props.time,
 		};
 		this.setEsquema = this.setEsquema.bind(this);
 		this.setFormacao = this.setFormacao.bind(this);
@@ -31,8 +30,7 @@ export default class PageEscalacao extends Component {
 		this.handleAction = this.handleAction.bind(this);
 		this.setFiltro = this.setFiltro.bind(this);
 		this.pesquisaFiltro = this.pesquisaFiltro.bind(this);
-		this.dadosUsuario = this.dadosUsuario.bind(this);
-		this.cadastraUsuario = this.cadastraUsuario.bind(this);
+
 	}
 
 	componentDidMount() {
@@ -40,6 +38,7 @@ export default class PageEscalacao extends Component {
 		this.retrieveFormacao();
 		this.retrieveJogadoras();
 		this.retrieveEquipes();
+
 	}
 	retrieveJogadoras() {
 		JogadorasDataService.getAll()
@@ -274,46 +273,16 @@ export default class PageEscalacao extends Component {
 		return result;
 	}
 
-	dadosUsuario(e) {
-
-		const { name, value } = e.target;
-		const usuario = this.state.usuario;
-		usuario[name] = value;
-
-		this.setState({
-			usuario: usuario
-		});
-	}
-
-	cadastraUsuario() {
-
-		var data = {
-			nome: this.state.usuario.nome,
-			email: this.state.usuario.email,
-			telefone: this.state.usuario.telefone,
-		}
-
-		UsuarioDataService.create(data)
-			.then(response => {
-				this.setState({ usuario: response.data})
-			})
-			.catch(e => {
-				console.log(e);
-			});
-
-	}
-
 	render() {
 
 		const { jogadoras } = this.state;
 		const { escalacao } = this.state;
 		const { formacao } = this.state;
-
+		const { time } = this.state;
 
 		return (
-			<div className="m-3">
-				<DadosUsuario dadosUsuario={this.dadosUsuario} cadastraUsuario={this.cadastraUsuario} />
-				<Escalacao escalacao={escalacao} formacao={formacao} action={this.handleAction} setEsquema={this.setEsquema} />
+			<div>
+				<Escalacao time={time} escalacao={escalacao} formacao={formacao} action={this.handleAction} setEsquema={this.setEsquema} />
 				<div>
 					<div className="header m-5">
 						<h1>Lista de Jogadoras</h1>
@@ -341,38 +310,7 @@ export default class PageEscalacao extends Component {
 						</table>
 					</div>
 				</div>
-
 			</div>
-
 		);
 	}
 }
-
-function DadosUsuario(props) {
-
-	return (
-		<form className="submit-form row g-3">
-			<div className="col-12 my-2">
-				<label htmlFor="inputNome" className="form-label">Nome</label>
-				<input type="text" className="form-control" id="inputNome" name="nome" onChange={props.dadosUsuario}/>
-			</div>
-			<div className="col-md-6 my-2">
-				<label htmlFor="inputeEmail" className="form-label">Email</label>
-				<input type="email" className="form-control" id="inputeEmail" name="email" onChange={props.dadosUsuario}/>
-			</div>
-			<div className="col-md-6 my-2">
-				<label htmlFor="inputTelefone" className="form-label">Telefone</label>
-				<input type="text" className="form-control" id="inputTelefone" name="telefone" onChange={props.dadosUsuario} />
-			</div>
-			<div className="col-12 my-2">
-				<label htmlFor="inputNomeDoTime" className="form-label">Nome do Time</label>
-				<input type="text" className="form-control" id="inputNomeDoTime" />
-			</div>
-			<div className="col-12 my-2">
-				<button className="btn btn-primary" onClick={props.cadastraUsuario}>Confirmar</button>
-			</div>
-		</form>
-	)
-
-}
-

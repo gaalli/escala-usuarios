@@ -14,6 +14,8 @@ module.exports = (sequelize, Sequelize) => {
     pontuacao: {
       type: Sequelize.INTEGER
     }
+  },{
+    freezeTableName: true
   });
 
   Time.associate = function (models) {

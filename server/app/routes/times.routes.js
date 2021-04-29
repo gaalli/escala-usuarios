@@ -8,6 +8,7 @@ module.exports = app => {
 	// Retrieve Classificacao
 	router.get("/classificacao", times.getClassificacao);
 
+  router.post("/", times.create);
 
   app.use('/api/times', router);
 };
