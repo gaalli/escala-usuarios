@@ -1,43 +1,36 @@
 module.exports = (sequelize, Sequelize) => {
-  const Escalacao = sequelize.define("escalacao", {
-    jogadora1: {
-      type: Sequelize.STRING
+	const Escalacao = sequelize.define("escalacao", {
+		timeId: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+			references: {
+				model: 'Time',
+				key: 'id'
+			}
 		},
-		jogadora2: {
-      type: Sequelize.STRING
+		rodadaId: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+			references: {
+				model: 'Rodada',
+				key: 'id'
+			}
 		},
-		jogadora3: {
-      type: Sequelize.STRING
+		formacaoId: {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+			references: {
+				model: 'Formacao',
+				key: 'id'
+			}
 		},
-		jogadora4: {
-      type: Sequelize.STRING
-		},
-		jogadora5: {
-      type: Sequelize.STRING
-		},
-		jogadora6: {
-      type: Sequelize.STRING
-		},
-		jogadora7: {
-      type: Sequelize.STRING
-		},
-		jogadora8: {
-      type: Sequelize.STRING
-		},
-		jogadora9: {
-      type: Sequelize.STRING
-		},
-		jogadora10: {
-      type: Sequelize.STRING
-		},
-		jogadora11: {
-      type: Sequelize.STRING
-    },
+	}, {
+		freezeTableName: true
 	});
 
-	//Equipe.associate = function(models) {
-	//	Equipe.hasMany(models.Jogadora);
-	//}
+	Escalacao.associate = function (models) {
+		Escalacao.belongsToMany(models.Jogadora, { through: models.Escalacao_Jogadora });
+	}
 
-  return Escalacao;
+	return Escalacao;
 };

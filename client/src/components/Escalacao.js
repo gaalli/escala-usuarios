@@ -9,7 +9,7 @@ function Escalacao(props) {
 
 	return (
 
-		<div>
+		<div className="pb-5">
 			<div className="header m-5">
 				<h1>Escalação</h1>
 			</div>
@@ -30,8 +30,8 @@ function Escalacao(props) {
 			</div>
 
 
-			<div>
-				<table className="table my-3 mx-auto">
+			<div className="">
+				<table className="table my-3 mx-auto border-bottom">
 					<thead>
 						<tr>
 							<th scope="col">Posição</th>
@@ -46,6 +46,10 @@ function Escalacao(props) {
 						))}
 					</tbody>
 				</table>
+			</div>
+			<div className="text-center">
+				<label className="m-3 h3">Tudo pronto? Então é só escalar</label>
+				<button className="m-3 btn-primary btn-lg" onClick={props.setEscalacao}>Escalar</button>
 			</div>
 		</div>
 

@@ -4,6 +4,7 @@ import '../App.css';
 import FormacaoDataService from "../services/formacao.service";
 import JogadorasDataService from "../services/jogadoras.service";
 import EquipesDataService from "../services/equipes.service";
+import EscalacaoDataService from "../services/escalacao.service";
 
 import ListaJogadoras from "./ListaJogadoras";
 import Escalacao from "./Escalacao";
@@ -23,6 +24,7 @@ export default class PageEscalacao extends Component {
 			jogadorasPorTime: [],
 			maxJogadoras: 4,
 			time: props.time,
+			rodada: 1
 		};
 		this.setEsquema = this.setEsquema.bind(this);
 		this.setFormacao = this.setFormacao.bind(this);
@@ -30,6 +32,7 @@ export default class PageEscalacao extends Component {
 		this.handleAction = this.handleAction.bind(this);
 		this.setFiltro = this.setFiltro.bind(this);
 		this.pesquisaFiltro = this.pesquisaFiltro.bind(this);
+		this.setEscalacao = this.setEscalacao.bind(this);
 
 	}
 
@@ -104,11 +107,11 @@ export default class PageEscalacao extends Component {
 
 		var escalacao = this.state.escalacao;
 		for (var i = 0; i < escalacao.length; i++) {
-			this.removeJogadora(escalacao[i]);
+			if(escalacao[i].id !== undefined)
+				this.removeJogadora(escalacao[i]);
 		}
 		this.setState({
 			posicoesFormacao: formacao,
-			//posicoesEscalacao: formacao,
 			escalacao: [],
 			posicoerPorTime: [],
 
@@ -273,6 +276,51 @@ export default class PageEscalacao extends Component {
 		return result;
 	}
 
+	setEscalacao () {
+
+		if(this.validarEscalacao()){
+			const escalacao = this.state.escalacao;
+			const jogadoras = [];
+
+			for(var i = 0; i < escalacao.length; i++){
+				jogadoras[i] = escalacao[i].id;
+			}
+
+			var data = {
+				timeId: this.state.time.id,
+				rodadaId: 1,
+				formacaoId: this.state.posicoesFormacao.id,
+				jogadoras: jogadoras,
+			}
+
+			console.log(data);
+			EscalacaoDataService.create(data)
+			.then(response => {
+				console.log(response.data)
+			})
+			.then( () => {
+				//callback()
+			})
+			.catch(e => {
+				console.log(e);
+			});
+		}else{
+			console.log("Escalação inválida")
+		}
+		
+	}
+
+	validarEscalacao(){
+		const escalacao = this.state.escalacao;
+
+		for(var i = 0; i < escalacao.length; i++){
+			if(escalacao[i].id === undefined)
+				return false
+		}
+
+		return true
+	}
+
 	render() {
 
 		const { jogadoras } = this.state;
@@ -282,9 +330,15 @@ export default class PageEscalacao extends Component {
 
 		return (
 			<div>
-				<Escalacao time={time} escalacao={escalacao} formacao={formacao} action={this.handleAction} setEsquema={this.setEsquema} />
-				<div>
-					<div className="header m-5">
+				<Escalacao time={time} 
+				escalacao={escalacao} 
+				formacao={formacao} 
+				action={this.handleAction} 
+				setEsquema={this.setEsquema}
+				setEscalacao={this.setEscalacao} />
+
+				<div className="my-5">
+					<div className="header m-5 position-relative">
 						<h1>Lista de Jogadoras</h1>
 					</div>
 					<div>

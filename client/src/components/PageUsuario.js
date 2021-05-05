@@ -42,7 +42,6 @@ export default class PageUsuario extends Component {
 	}
 
 	cadastraUsuario(callback) {
-		console.log("cadastrar usuario")
 		var data = {
 			nome: this.state.usuario.nome,
 			email: this.state.usuario.email,

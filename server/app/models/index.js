@@ -25,6 +25,9 @@ db.Jogadora = require("./jogadoras.model.js")(sequelize, Sequelize);
 db.Escalacao = require("./escalacao.model.js")(sequelize, Sequelize);
 db.Formacao = require("./formacao.model.js")(sequelize, Sequelize);
 db.Usuario = require("./usuario.model.js")(sequelize, Sequelize);
+db.Rodada = require("./rodada.model.js")(sequelize, Sequelize);
+db.Escalacao = require("./escalacao.model.js")(sequelize, Sequelize);
+db.Escalacao_Jogadora = require("./escalacao_jogadora.model.js")(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {

@@ -8,5 +8,7 @@ module.exports = app => {
 	
 	router.get("/:id", escalacao.findOne);
 
+  router.post("/", escalacao.create);
+
   app.use('/api/escalacao', router);
 };

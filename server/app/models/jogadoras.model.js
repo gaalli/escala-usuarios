@@ -14,10 +14,13 @@ module.exports = (sequelize, Sequelize) => {
 				key: 'id'
 			}
 		}
-	});
+	},{
+		freezeTableName: true
+	  });
 
 	Jogadora.associate = function (models) {
-		Jogadora.belongsTo(models.Equipe)
+		Jogadora.belongsTo(models.Equipe);
+		Jogadora.belongsToMany(models.Escalacao, { through: models.Escalacao_Jogadora });
 	}
 
 	return Jogadora;

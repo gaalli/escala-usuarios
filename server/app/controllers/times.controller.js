@@ -72,4 +72,3 @@ exports.create = (req, res) => {
       });
     });
 };
-
