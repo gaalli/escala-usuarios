@@ -7,6 +7,13 @@ function Escalacao(props) {
 	const formacao = props.formacao;
 	const time = props.time;
 
+	var formacaoSelecionada;
+
+	if(escalacao.formacaoId){
+		formacaoSelecionada = formacao.find( x => x.id === escalacao.formacaoId)
+	}
+
+
 	return (
 
 		<div className="pb-5">
@@ -17,10 +24,10 @@ function Escalacao(props) {
 			<div className="form-inline">
 				<label>
 					Formação
-					<select id="selectFormacao" className="custom-select m-2" onChange={props.setEsquema}>
+					<select id="selectFormacao" className="custom-select m-2" value={formacaoSelecionada ? formacaoSelecionada.nome : ""} onChange={props.setEsquema}>
 						{formacao &&
 							formacao.map((f, index) => (
-								<option key={"formacao" + f.id} value={f.nome}>{f.nome}</option>
+								<option key={"formacao" + f.id} value={f.nome} >{f.nome}</option>
 							))}
 					</select>
 				</label>
@@ -41,7 +48,7 @@ function Escalacao(props) {
 						</tr>
 					</thead>
 					<tbody>
-						{escalacao.map((jogadora, index) => (
+						{escalacao.jogadoras.map((jogadora, index) => (
 							<JogadoraRow key={index} jogadora={jogadora} action={props.action} />
 						))}
 					</tbody>

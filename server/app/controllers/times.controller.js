@@ -37,9 +37,27 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving times."
       });
     });
+};
+
+exports.findOne = (req, res) => {
+
+  const usuarioId = req.query.usuarioId;
+  var condition = usuarioId ? { usuarioId: usuarioId}  : null;
+  
+  Time.findOne({ where: condition})
+  .then( data => {
+    res.send(data);
+  })
+  .catch( err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving times."
+    });
+  });
+
 };
 
 exports.create = (req, res) => {

@@ -67,7 +67,8 @@ export default class PageUsuario extends Component {
 
 		UsuarioDataService.getByEmail(email)
 			.then(response => {
-				this.setState({ usuario: response.data[0] })
+				this.setState({ usuario: response.data })
+				//console.log(response.data);
 			})
 			.then( () => {
 				this.validarUsuario()
@@ -81,7 +82,7 @@ export default class PageUsuario extends Component {
 		console.log("validar usuario")
 		var usuario = this.state.usuario;
 
-		if (usuario === undefined) {
+		if (usuario === undefined || usuario === "" ) {
 			console.log("usuario nao existe")
 			this.setState({
 				exibeForm: true,
@@ -90,12 +91,12 @@ export default class PageUsuario extends Component {
 			})
 
 		} else {
-			console.log("usuario existe")
+			//console.log("usuario existe")
 			if(this.state.time.id===undefined){
-				console.log("time nao existe")
+				//console.log("time nao existe")
 				this.pesquisarTime(usuario.id)
 			}else{
-				console.log("time existe")
+				//console.log("time existe")
 				this.setState({
 					exibeForm: false,
 					usuarioValido: true,
@@ -107,8 +108,7 @@ export default class PageUsuario extends Component {
 	pesquisarTime(usuarioId){
 		TimesDataService.getByUsuario(usuarioId)
 			.then(response => {
-				this.setState({ time: response.data[0] })
-				console.log(response.data[0])
+				this.setState({ time: response.data })
 			})
 			.then( () => {
 				this.validarTime();
@@ -138,7 +138,7 @@ export default class PageUsuario extends Component {
 
 	render() {
 
-		const { exibeForm } = this.state;
+		const exibeForm = this.state.exibeForm;
 		const time = this.state.time;
 
 		return (

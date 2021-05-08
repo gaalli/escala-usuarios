@@ -2,7 +2,7 @@ create database ESCALADB;
 
 use ESCALADB;
 
-CREATE TABLE `escaladb`.`equipes` (
+CREATE TABLE `escaladb`.`equipe` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL,
   `escudo` VARCHAR(45) NULL,
@@ -10,22 +10,22 @@ CREATE TABLE `escaladb`.`equipes` (
   `updatedAt` DATETIME NOT NULL,
   PRIMARY KEY (`id`));
   
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('BAHIA', 'bahia.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('BOTAFOGO', 'botafogo.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('CORINTHIANS', 'corinthians.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('CRUZEIRO', 'cruzeiro.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('FERROVIÁRIA', 'ferroviaria.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('MARINHA', 'marinha.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('GRÊMIO', 'gremio.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('INTERNACIONAL', 'internacional.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('KINDERMANN', 'kindermann.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('MINAS BRASÍLIA', 'minas-brasilia.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('NAPOLI', 'napoli.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('PALMEIRAS', 'palmeiras.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('REAL BRASÍLIA', 'real-brasilia.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('SANTOS', 'santos.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('SÃO JOSÉ', 'sao-jose.png', now(), now());
-INSERT INTO equipes (nome, escudo, createdAt, updatedAt) VALUES ('SÃO PAULO', 'sao-paulo.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('BAHIA', 'bahia.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('BOTAFOGO', 'botafogo.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('CORINTHIANS', 'corinthians.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('CRUZEIRO', 'cruzeiro.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('FERROVIÁRIA', 'ferroviaria.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('MARINHA', 'marinha.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('GRÊMIO', 'gremio.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('INTERNACIONAL', 'internacional.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('KINDERMANN', 'kindermann.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('MINAS BRASÍLIA', 'minas-brasilia.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('NAPOLI', 'napoli.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('PALMEIRAS', 'palmeiras.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('REAL BRASÍLIA', 'real-brasilia.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('SANTOS', 'santos.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('SÃO JOSÉ', 'sao-jose.png', now(), now());
+INSERT INTO equipe (nome, escudo, createdAt, updatedAt) VALUES ('SÃO PAULO', 'sao-paulo.png', now(), now());
     
 CREATE TABLE `escaladb`.`jogadora` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -38,7 +38,7 @@ CREATE TABLE `escaladb`.`jogadora` (
   INDEX `equipeId_idx` (`equipeId` ASC) VISIBLE,
   CONSTRAINT `equipeId`
     FOREIGN KEY (`equipeId`)
-    REFERENCES `escaladb`.`equipes` (`id`)
+    REFERENCES `escaladb`.`equipe` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
   
@@ -490,9 +490,9 @@ CREATE TABLE `escaladb`.`usuario` (
   `updatedAt` DATETIME NOT NULL,
   PRIMARY KEY (`id`));
   
-INSERT INTO usuarios (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 1', 'usuario1@teste.com', '(11) 11111-1111', now(), now());
-INSERT INTO usuarios (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 2', 'usuario2@teste.com', '(22) 22222-2222', now(), now());
-INSERT INTO usuarios (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 3', 'usuario3@teste.com', '(33) 33333-3333', now(), now());
+INSERT INTO usuario (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 1', 'usuario1@teste.com', '(11) 11111-1111', now(), now());
+INSERT INTO usuario (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 2', 'usuario2@teste.com', '(22) 22222-2222', now(), now());
+INSERT INTO usuario (nome, email, telefone, createdAt, updatedAt) VALUES ('Usuário Teste 3', 'usuario3@teste.com', '(33) 33333-3333', now(), now());
   
   CREATE TABLE `escaladb`.`formacao` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -509,7 +509,8 @@ INSERT INTO usuarios (nome, email, telefone, createdAt, updatedAt) VALUES ('Usu�
 INSERT INTO formacao (nome, num_goleira, num_lateral, num_zagueira, num_meia, num_atacante, createdAt, updatedAt) VALUES ('4-3-3', 1, 2, 2, 3, 3, now(), now());
 INSERT INTO formacao (nome, num_goleira, num_lateral, num_zagueira, num_meia, num_atacante, createdAt, updatedAt) VALUES ('4-4-2', 1, 2, 2, 4, 2, now(), now());  
 INSERT INTO formacao (nome, num_goleira, num_lateral, num_zagueira, num_meia, num_atacante, createdAt, updatedAt) VALUES ('3-4-3', 1, 0, 3, 4, 3, now(), now());
-CREATE TABLE `escaladb`.`times` (
+
+CREATE TABLE `escaladb`.`time` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL,
   `usuarioId` INT NOT NULL,
@@ -524,8 +525,67 @@ CREATE TABLE `escaladb`.`times` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
   
-  INSERT INTO times (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 1', 1, '10', now(), now());
-  INSERT INTO times (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 2', 2, '20', now(), now());
-  INSERT INTO times (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 3', 3, '15', now(), now());
+  INSERT INTO time (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 1', 1, '10', now(), now());
+  INSERT INTO time (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 2', 2, '20', now(), now());
+  INSERT INTO time (nome, usuarioId, pontuacao, createdAt, updatedAt) VALUES ('Time Teste 3', 3, '15', now(), now());
   
+  CREATE TABLE `escaladb`.`rodada` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL,
+  `dataAbertura` DATETIME NULL,
+  `dataFechamento` DATETIME NULL,
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NOT NULL,
+  PRIMARY KEY (`id`));
+  
+INSERT INTO rodada (nome, createdAt, updatedAt) VALUES ('1', now(), now());
+INSERT INTO rodada (nome, createdAt, updatedAt) VALUES ('2', now(), now());
+INSERT INTO rodada (nome, createdAt, updatedAt) VALUES ('3', now(), now());
+
+CREATE TABLE `escaladb`.`escalacao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `timeId` INT NOT NULL,
+  `rodadaId` INT NOT NULL,
+  `formacaoId` INT NOT NULL,
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `escala_time_idx` (`timeId` ASC) VISIBLE,
+  INDEX `escala_rodada_idx` (`rodadaId` ASC) VISIBLE,
+  INDEX `escala_formacao_idx` (`formacaoId` ASC) VISIBLE,
+  CONSTRAINT `escala_time`
+    FOREIGN KEY (`timeId`)
+    REFERENCES `escaladb`.`time` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `escala_rodada`
+    FOREIGN KEY (`rodadaId`)
+    REFERENCES `escaladb`.`rodada` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `escala_formacao`
+    FOREIGN KEY (`formacaoId`)
+    REFERENCES `escaladb`.`formacao` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `escaladb`.`escalacao_jogadora` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `escalacaoId` INT NOT NULL,
+  `jogadoraId` INT NOT NULL,
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `ej_escalacao_idx` (`escalacaoId` ASC) VISIBLE,
+  INDEX `ej_jogadora_idx` (`jogadoraId` ASC) VISIBLE,
+  CONSTRAINT `ej_escalacao`
+    FOREIGN KEY (`escalacaoId`)
+    REFERENCES `escaladb`.`escalacao` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ej_jogadora`
+    FOREIGN KEY (`jogadoraId`)
+    REFERENCES `escaladb`.`jogadora` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
   

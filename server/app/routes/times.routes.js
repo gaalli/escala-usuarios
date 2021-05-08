@@ -5,8 +5,11 @@ module.exports = app => {
 
   // Retrieve all Times
 	router.get("/", times.findAll);
+
 	// Retrieve Classificacao
 	router.get("/classificacao", times.getClassificacao);
+
+  router.get("/byUsuario", times.findOne)
 
   router.post("/", times.create);
 

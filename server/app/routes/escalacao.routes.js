@@ -3,12 +3,15 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Retrieve all Jogadoras
 	router.get("/", escalacao.findAll);
 	
-	router.get("/:id", escalacao.findOne);
+	router.get("/byId/:id", escalacao.findByPk);
+
+  router.get("/byRodada/", escalacao.findOne);
 
   router.post("/", escalacao.create);
+
+  router.put("/:id", escalacao.update);
 
   app.use('/api/escalacao', router);
 };

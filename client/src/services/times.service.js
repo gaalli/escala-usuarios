@@ -14,7 +14,7 @@ class TimesDataService {
   }
 
   getByUsuario(usuarioId){
-    return http.get(`/times?usuarioId=${usuarioId}`);
+    return http.get(`/times/byUsuario?usuarioId=${usuarioId}`);
   }
 }
 

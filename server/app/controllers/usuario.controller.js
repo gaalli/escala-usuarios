@@ -1,4 +1,5 @@
 const db = require("../models");
+const { findOne } = require("./times.controller");
 const Usuario = db.Usuario;
 const Op = db.Sequelize.Op;
 
@@ -21,7 +22,7 @@ exports.findAll = (req, res) => {
 
 };
 
-exports.findOne = (req, res) => {
+exports.findByPk = (req, res) => {
 	
   const id = req.params.id;
 
@@ -34,6 +35,27 @@ exports.findOne = (req, res) => {
         message: "Error retrieving usuario with id=" + id
       });
     });
+};
+
+exports.findOne = (req, res) => {
+
+  const email = req.query.email;
+  var condition = email ? { email: email}  : null;
+  
+  console.log("findOne")
+  console.log("email:" + email)
+
+  Usuario.findOne({ where: condition})
+  .then( data => {
+    res.send(data);
+  })
+  .catch( err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving usuario."
+    });
+  });
+
 };
 
 exports.create = (req, res) => {

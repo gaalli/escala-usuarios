@@ -6,7 +6,9 @@ module.exports = app => {
     // Retrieve all Jogadoras
       router.get("/", usuario.findAll);
       
-      router.get("/:id", usuario.findOne);
+      router.get("/byId/:id", usuario.findByPk);
+
+      router.get("/byEmail/", usuario.findOne);
 
       router.post("/", usuario.create)
   

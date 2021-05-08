@@ -10,7 +10,7 @@ class UsuarioDataService {
   }
 
   getByEmail (email) {
-    return http.get(`/usuario?email=${email}`);
+    return http.get(`/usuario/byEmail/?email=${email}`);
   }
 
 	getClassificacao() {
